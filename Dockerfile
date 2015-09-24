@@ -13,9 +13,9 @@ RUN apt-get update && apt-get install -y nginx
 
 # Apply Nginx configuration
 ADD config/nginx.conf /etc/nginx/nginx.conf
-ADD config/laravel /etc/nginx/sites-available/laravel
-RUN ln -s /etc/nginx/sites-available/laravel /etc/nginx/sites-enabled/laravel && \
-    rm /etc/nginx/sites-enabled/default
+#ADD config/laravel /etc/nginx/sites-available/laravel
+#RUN ln -s /etc/nginx/sites-available/laravel /etc/nginx/sites-enabled/laravel && \
+RUN rm /etc/nginx/sites-enabled/default
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
@@ -34,8 +34,7 @@ VOLUME ["/data"]
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # PORTS
-EXPOSE 80
-EXPOSE 443
+EXPOSE 80 443
 
 WORKDIR /opt/bin
 ENTRYPOINT ["/opt/bin/nginx-start.sh"]
